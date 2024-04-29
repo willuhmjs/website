@@ -16,7 +16,7 @@ const experience = defineCollection({
     org: z.string(),
     subtitle: z.string(),
     dateStart: z.coerce.date(),
-    dateEnd: z.union([z.coerce.date(), z.string()]),
+    dateEnd: z.union([z.coerce.date(), z.enum(["Present"])]),
     isSchool: z.boolean().default(false)
   }),
 });
