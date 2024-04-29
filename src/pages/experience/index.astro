@@ -4,9 +4,11 @@ import PageLayout from "@layouts/PageLayout.astro";
 import Container from "@components/Container.astro";
 import { dateRange } from "@lib/utils";
 import { EXPERIENCE } from "@consts";
+import type { MarkdownHeading } from "astro";
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
 const collection = (await getCollection("experience"))
-  .sort((a, b) => new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf());
+  .sort((a, b) => (new Date(b.data.dateEnd).valueOf() || Infinity) - (new Date(a.data.dateEnd).valueOf() || Infinity) );
 
 const experience = await Promise.all(
   collection.map(async (item) => {
@@ -14,34 +16,71 @@ const experience = await Promise.all(
     return { ...item, Content };
   })
 );
+
+type exp = { Content: AstroComponentFactory; id: string; slug: string; body: string; collection: "experience"; data: { org: string; subtitle: string; dateStart: Date; dateEnd: (string | Date) & (string | Date | undefined); isSchool: boolean; }; render(): Promise<{ Content: AstroComponentFactory; headings: MarkdownHeading[]; remarkPluginFrontmatter: Record<string, any>; }>; }[];
+let education: exp = [];
+let work: exp = [];
+
+experience.forEach(exp => {
+  if (exp.data.isSchool) return education.push(exp);
+  work.push(exp);
+});
 ---
 
 <PageLayout title={EXPERIENCE.TITLE} description={EXPERIENCE.DESCRIPTION}>
   <Container>
     <div class="space-y-10">
-      <div class="animate font-semibold text-black dark:text-white">
-        Experience
+      <div class="space-y-4">
+        <div class="animate font-semibold text-black dark:text-white">
+          {education.length > 0 ? "Education" : ""}
+        </div>
+        <ul class="flex flex-col space-y-4">
+          {
+            education.map(entry => (
+              <li class="animate">
+                <div class="text-sm opacity-75">
+                  {dateRange(entry.data.dateStart, entry.data.dateEnd)}
+                </div>
+                <div class="font-semibold text-black dark:text-white">
+                  {entry.data.org}
+                </div>
+                <div class="text-sm opacity-75">
+                  {entry.data.subtitle}
+                </div>
+                <article>
+                  <entry.Content />
+                </article>
+              </li>
+            ))
+          }
+        </ul>
       </div>
-      <ul class="flex flex-col space-y-4">
-        { 
-          experience.map(entry => (
-            <li class="animate">
-              <div class="text-sm opacity-75">
-                {dateRange(entry.data.dateStart, entry.data.dateEnd)}
-              </div>
-              <div class="font-semibold text-black dark:text-white">
-                {entry.data.company}
-              </div>
-              <div class="text-sm opacity-75">
-                {entry.data.role}
-              </div>
-              <article>
-                <entry.Content />
-              </article>
-            </li>
-          ))
-        }
-      </ul>
+      <div class="space-y-4">
+        <div class="animate font-semibold text-black dark:text-white">
+          {work.length > 0 ? "Work" : ""}
+        </div>
+        <ul class="flex flex-col space-y-4">
+          {
+            work.map(entry => (
+              <li class="animate">
+                <div class="text-sm opacity-75">
+                  {dateRange(entry.data.dateStart, entry.data.dateEnd)}
+                </div>
+                <div class="font-semibold text-black dark:text-white">
+                  {entry.data.org}
+                </div>
+                <div class="text-sm opacity-75">
+                  {entry.data.subtitle}
+                </div>
+                <article>
+                  <entry.Content />
+                </article>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
 <!-- 
       <ul class="animate flex flex-col gap-4">
 

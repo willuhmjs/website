@@ -13,10 +13,11 @@ const blog = defineCollection({
 const experience = defineCollection({
   type: "content",
   schema: z.object({
-    company: z.string(),
-    role: z.string(),
+    org: z.string(),
+    subtitle: z.string(),
     dateStart: z.coerce.date(),
     dateEnd: z.union([z.coerce.date(), z.string()]),
+    isSchool: z.boolean().default(false)
   }),
 });
 

@@ -19,7 +19,7 @@ export const BLOG: Metadata = {
 };
 
 export const EXPERIENCE: Metadata = {
-  TITLE: "Work",
+  TITLE: "Experience",
   DESCRIPTION: "My academic and professional experience.",
 };
 
