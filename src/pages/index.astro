@@ -6,6 +6,7 @@ import ArrowCard from "@components/ArrowCard.astro";
 import Link from "@components/Link.astro";
 import { SITE, HOME, SOCIALS } from "@consts";
 import Experience from "@components/Experience.astro";
+import { Icon } from "astro-icon/components";
 
 const blog = (await getCollection("blog"))
   .filter(post => !post.data.draft)
@@ -83,16 +84,11 @@ const exp = (await getCollection("experience"))
           {SOCIALS.map(SOCIAL => (
             <li class="flex gap-x-2 text-nowrap">
               <Link href={SOCIAL.HREF} external aria-label={`${SITE.NAME} on ${SOCIAL.NAME}`}>
+                <Icon name={`mdi:${SOCIAL.NAME}`} />
                 {SOCIAL.NAME}
               </Link>
-              {"/"}
             </li>
           ))}
-          <li class="line-clamp-1">
-            <Link href={`mailto:${SITE.EMAIL}`} aria-label={`Email ${SITE.NAME}`}>
-              {SITE.EMAIL}
-            </Link>
-          </li>
         </ul>
       </section>
     </div>
