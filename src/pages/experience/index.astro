@@ -3,12 +3,12 @@ import { getCollection } from "astro:content";
 import PageLayout from "@layouts/PageLayout.astro";
 import Container from "@components/Container.astro";
 import { dateRange } from "@lib/utils";
-import { WORK } from "@consts";
+import { EXPERIENCE } from "@consts";
 
-const collection = (await getCollection("work"))
+const collection = (await getCollection("experience"))
   .sort((a, b) => new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf());
 
-const work = await Promise.all(
+const experience = await Promise.all(
   collection.map(async (item) => {
     const { Content } = await item.render();
     return { ...item, Content };
@@ -16,15 +16,15 @@ const work = await Promise.all(
 );
 ---
 
-<PageLayout title={WORK.TITLE} description={WORK.DESCRIPTION}>
+<PageLayout title={EXPERIENCE.TITLE} description={EXPERIENCE.DESCRIPTION}>
   <Container>
     <div class="space-y-10">
       <div class="animate font-semibold text-black dark:text-white">
-        Work
+        Experience
       </div>
       <ul class="flex flex-col space-y-4">
         { 
-          work.map(entry => (
+          experience.map(entry => (
             <li class="animate">
               <div class="text-sm opacity-75">
                 {dateRange(entry.data.dateStart, entry.data.dateEnd)}
