@@ -1,0 +1,22 @@
+---
+import { dateRange } from "@lib/utils";
+import { Icon } from 'astro-icon/components'
+const { entry } = Astro.props;
+
+---
+
+<li class="animate">
+    <div class="text-sm opacity-75">
+      {dateRange(entry.data.dateStart, entry.data.dateEnd)}
+    </div>
+    <div class="font-semibold text-black dark:text-white">
+      {entry.data.org}
+    </div>
+    <div class="text-sm opacity-75 flex align-center gap-1">
+      {entry.data.isSchool ? <Icon name="mdi:school-outline" class="w-4 h-4 inline-block" /> : <Icon name="mdi:badge-account-horizontal-outline" class="w-4 h-4 inline-block" />}
+      {entry.data.subtitle}
+    </div>
+    <article>
+      {entry.body && <entry.Content />}
+    </article>
+  </li>
