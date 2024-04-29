@@ -4,7 +4,6 @@ export const SITE: Site = {
   NAME: "willuhmjs",
   EMAIL: "willuhmjs@gmail.com",
   NUM_POSTS_ON_HOMEPAGE: 3,
-
 };
 
 export const HOME: Metadata = {
@@ -28,12 +27,12 @@ export const CONTACT: Metadata = {
 };
 
 export const SOCIALS: Socials = [
-  { 
+  {
     NAME: "github",
-    HREF: "https://github.com/willuhmjs"
+    HREF: "https://github.com/willuhmjs",
   },
-  { 
+  {
     NAME: "linkedin",
     HREF: "https://www.linkedin.com/in/williamfaircloth",
-  }
+  },
 ];
