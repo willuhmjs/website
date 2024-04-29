@@ -1,6 +1,6 @@
 ---
 org: "Food Lion"
-subtitle: "Cashier"
+subtitle: "Sales Associate"
 dateStart: "06/01/2023"
 dateEnd: "08/01/2023"
 ---
