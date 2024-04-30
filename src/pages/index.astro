@@ -13,13 +13,15 @@ const blog = (await getCollection("blog"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0,SITE.NUM_POSTS_ON_HOMEPAGE);
 
-const exp = (await getCollection("experience"))
+const experience = (await getCollection("experience"))
   .filter(entry => entry.data.dateEnd === "Present")
   .sort((a, b) => {
     if (a.data.isSchool && !b.data.isSchool) return -1;
     if (!a.data.isSchool && b.data.isSchool) return 1;
     return b.data.dateStart.valueOf() - a.data.dateStart.valueOf();
   })
+
+
 ---
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
@@ -65,7 +67,7 @@ const exp = (await getCollection("experience"))
           </Link>
         </div>
         <ul class="flex flex-col space-y-4">
-          {exp.map(entry => (
+          {experience.map(entry => (
             <Experience {entry} />
           ))}
         </ul>
@@ -81,13 +83,14 @@ const exp = (await getCollection("experience"))
           </p>
         </article>
         <ul class="flex flex-wrap gap-2">
-          {SOCIALS.map(SOCIAL => (
-            <li class="flex gap-x-2 text-nowrap">
+          {SOCIALS.map((SOCIAL, i) => (
+            <li class="flex gap-x-1 text-nowrap">
               <Link href={SOCIAL.HREF} external aria-label={`${SITE.NAME} on ${SOCIAL.NAME}`}>
                 <Icon name={`mdi:${SOCIAL.NAME}`} />
                 {SOCIAL.NAME}
               </Link>
             </li>
+            <li>{i !== SOCIALS.length - 1 && <span>/</span>}</li>
           ))}
         </ul>
       </section>
