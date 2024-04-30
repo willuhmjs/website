@@ -54,6 +54,7 @@ const experience = (await getCollection("experience"))
               <ArrowCard entry={post} />
             </li>
           ))}
+          {blog.length === 0 && <p>No posts yet.</p>}
         </ul>
       </section>
 
@@ -70,6 +71,7 @@ const experience = (await getCollection("experience"))
           {experience.map(entry => (
             <Experience {entry} />
           ))}
+          {experience.length === 0 && <p>No active work or education.</p>}
         </ul>
       </section>
 
