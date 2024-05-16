@@ -13,9 +13,11 @@ jobs:
         with:
           node-version: 20
           cache: pnpm
-      - name: Install dependencies
-        run: |
-          pnpm i
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+            version: 8
+            run_install: true
       - name: build
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
