@@ -12,11 +12,27 @@ const { entry } = Astro.props;
     <div class="font-semibold text-black dark:text-white">
       {entry.data.org}
     </div>
-    <div class="text-sm opacity-75 flex align-center gap-1">
+    <div class="text-sm opacity-75 flex align-center gap-1 subtitle">
       {entry.data.isSchool ? <Icon name="mdi:school-outline" class="w-4 h-4 inline-block" /> : <Icon name="mdi:badge-account-horizontal-outline" class="w-4 h-4 inline-block" />}
-      {entry.data.subtitle}
+      <span set:html={entry.data.subtitle}/>
     </div>
     <article>
       {entry.Content && <entry.Content />}
     </article>
   </li>
+  
+  <style>
+    
+    .subtitle {
+      margin-top: 5px;
+    }
+
+    .subtitle > svg {
+      display: inline;
+      margin: auto 0;
+      margin-right: 5px;
+    }
+    
+
+
+  </style>

@@ -1,9 +1,9 @@
 ---
 org: "Old Dominion University"
-subtitle: "Bachelor of Science in Computer Science, Minor in German"
+subtitle: "Bachelor of Science in Computer Science<br><span style='font-size: 12px; font-style: italic;'>Minor in German"
 dateStart: "09/01/2024"
 dateEnd: "Present"
 isSchool: true
 ---
 
-I conducted undergraduate research and pursued various personal projects.
+* Conducted undergraduate research and pursued various personal projects.
