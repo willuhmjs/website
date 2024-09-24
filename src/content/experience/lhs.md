@@ -5,4 +5,4 @@ dateStart: "09/01/2022"
 dateEnd: "06/01/2024"
 isSchool: true
 ---
-* Learned about the foundations of technology, computer information systems, and cybersecurity software operations as a student of the Landstown High School Governor's STEM Academy.
+* Learned about the foundations of technology, computer information systems, and cybersecurity software operations as a student of the Governor's STEM Academy.
