@@ -4,11 +4,15 @@ import PageLayout from "@layouts/PageLayout.astro";
 import Container from "@components/Container.astro";
 import Experience from "@components/Experience.astro";
 import { EXPERIENCE } from "@consts";
-import type { MarkdownHeading } from "astro";
-import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
 const collection = (await getCollection("experience"))
-  .sort((a, b) => (new Date(b.data.dateEnd).valueOf() || Infinity) - (new Date(a.data.dateEnd).valueOf() || Infinity) );
+  .sort((a, b) => {
+    const aDate = a.data.positions[a.data.positions.length - 1].dateEnd;
+    const bDate = b.data.positions[b.data.positions.length - 1].dateEnd;
+    if (aDate === "Present") return -1;
+    if (bDate === "Present") return 1;
+    return bDate.valueOf() - aDate.valueOf();
+  });
 
 const experience = await Promise.all(
   collection.map(async (item) => {
@@ -17,9 +21,9 @@ const experience = await Promise.all(
   })
 );
 
-type exp = { Content: AstroComponentFactory; id: string; slug: string; body: string; collection: "experience"; data: { org: string; subtitle: string; dateStart: Date; dateEnd: (string | Date) & (string | Date | undefined); isSchool: boolean; }; render(): Promise<{ Content: AstroComponentFactory; headings: MarkdownHeading[]; remarkPluginFrontmatter: Record<string, any>; }>; }[];
-let education: exp = [];
-let work: exp = [];
+type Exp = (typeof experience)[number];
+let education: Exp[] = [];
+let work: Exp[] = [];
 
 experience.forEach(exp => {
   if (exp.data.isSchool) return education.push(exp);
@@ -54,7 +58,6 @@ experience.forEach(exp => {
           }
         </ul>
       </div>
-    </div>
     </div>
   </Container>
 </PageLayout>

@@ -1,22 +1,39 @@
 ---
 import { dateRange } from "@lib/utils";
-import { Icon } from 'astro-icon/components'
+import { Icon } from "astro-icon/components";
+import type { CollectionEntry } from "astro:content";
 const { entry } = Astro.props;
 
+type Position = CollectionEntry<"experience">["data"]["positions"][number];
 ---
 
 <li class="animate">
-    <div class="text-sm opacity-75">
-      {dateRange(entry.data.dateStart, entry.data.dateEnd)}
-    </div>
     <div class="font-semibold text-black dark:text-white">
       {entry.data.org}
     </div>
-    <div class="text-sm opacity-75 flex align-center gap-1 subtitle">
-      {entry.data.isSchool ? <Icon name="mdi:school-outline" class="w-4 h-4 inline-block" /> : <Icon name="mdi:badge-account-horizontal-outline" class="w-4 h-4 inline-block" />}
-      <span set:html={entry.data.subtitle}/>
-    </div>
-    <article>
+    {entry.data.positions.sort((a: Position, b: Position) => {
+      const dateA = a.dateEnd === "Present" ? new Date() : new Date(a.dateEnd);
+      const dateB = b.dateEnd === "Present" ? new Date() : new Date(b.dateEnd);
+      return dateB.getTime() - dateA.getTime();
+    }).map((position: Position) => (
+      <div class="mb-4">
+        {entry.data.isSchool && (
+          <div class="text-sm opacity-75">
+            {dateRange(position.dateStart, position.dateEnd)}
+          </div>
+        )}
+        <div class="text-sm opacity-75 flex align-center gap-1 subtitle">
+          {entry.data.isSchool ? <Icon name="mdi:school-outline" class="w-4 h-4 inline-block" /> : <Icon name="mdi:badge-account-horizontal-outline" class="w-4 h-4 inline-block" />}
+          <span set:html={position.subtitle}/>
+        </div>
+        {!entry.data.isSchool && (
+          <div class="text-sm opacity-75">
+            {dateRange(position.dateStart, position.dateEnd)}
+          </div>
+        )}
+      </div>
+    ))}
+    <article class="prose dark:prose-invert max-w-none">
       {entry.Content && <entry.Content />}
     </article>
   </li>

@@ -1,8 +1,9 @@
 ---
 org: "Aermor"
-subtitle: "Software Development Intern"
-dateStart: "06/17/2024"
-dateEnd: "08/14/2024"
+positions:
+  - subtitle: "Software Development Intern"
+    dateStart: "2024-06-17"
+    dateEnd: "2024-08-14"
 ---
 
 * Developed multiple internal projects using ASP.NET and Blazor, including an Inventory site and a Business Development site.

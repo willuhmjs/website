@@ -10,14 +10,18 @@ const blog = defineCollection({
   }),
 });
 
-const experience = defineCollection({
+export const experience = defineCollection({
   type: "content",
   schema: z.object({
     org: z.string(),
-    subtitle: z.string(),
-    dateStart: z.coerce.date(),
-    dateEnd: z.union([z.coerce.date(), z.enum(["Present"])]),
     isSchool: z.boolean().default(false),
+    positions: z.array(
+      z.object({
+        subtitle: z.string(),
+        dateStart: z.coerce.date(),
+        dateEnd: z.union([z.coerce.date(), z.enum(["Present"])]),
+      }),
+    ),
   }),
 });
 

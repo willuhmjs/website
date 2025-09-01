@@ -14,11 +14,13 @@ const blog = (await getCollection("blog"))
   .slice(0,SITE.NUM_POSTS_ON_HOMEPAGE);
 
 const experience = (await getCollection("experience"))
-  .filter(entry => entry.data.dateEnd === "Present")
+  .filter(entry => entry.data.positions.some(p => p.dateEnd === "Present"))
   .sort((a, b) => {
     if (a.data.isSchool && !b.data.isSchool) return -1;
     if (!a.data.isSchool && b.data.isSchool) return 1;
-    return b.data.dateStart.valueOf() - a.data.dateStart.valueOf();
+    const aDate = a.data.positions[a.data.positions.length - 1].dateStart.valueOf();
+    const bDate = b.data.positions[b.data.positions.length - 1].dateStart.valueOf();
+    return bDate - aDate;
   })
 
 
