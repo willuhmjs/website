@@ -16,8 +16,8 @@ const blog = (await getCollection("blog"))
 const experience = (await getCollection("experience"))
   .filter(entry => entry.data.positions.some(p => p.dateEnd === "Present"))
   .sort((a, b) => {
-    if (a.data.isSchool && !b.data.isSchool) return -1;
-    if (!a.data.isSchool && b.data.isSchool) return 1;
+    if (a.data.isSchool && !b.data.isSchool) return 1;
+    if (!a.data.isSchool && b.data.isSchool) return -1;
     const aDate = a.data.positions[a.data.positions.length - 1].dateStart.valueOf();
     const bDate = b.data.positions[b.data.positions.length - 1].dateStart.valueOf();
     return bDate - aDate;
