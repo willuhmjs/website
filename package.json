@@ -33,6 +33,7 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5.4.2"
   },
+  "packageManager": "pnpm@10.13.1",
   "devDependencies": {
     "@iconify-json/mdi": "^1.1.66",
     "astro-icon": "^1.1.0"
