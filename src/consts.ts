@@ -9,7 +9,7 @@ export const SITE: Site = {
 
 export const HOME: Metadata = {
   TITLE: "Home",
-  DESCRIPTION: "William is a software developer and computer science student..",
+  DESCRIPTION: "William is a cybersecurity student and systems administrator at Old Dominion University.",
 };
 
 export const BLOG: Metadata = {
@@ -19,7 +19,7 @@ export const BLOG: Metadata = {
 
 export const EXPERIENCE: Metadata = {
   TITLE: "Experience",
-  DESCRIPTION: "My academic and professional experience.",
+  DESCRIPTION: "My work, education, and academic experience in systems administration and cybersecurity.",
 };
 
 export const CONTACT: Metadata = {

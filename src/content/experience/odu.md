@@ -7,4 +7,6 @@ positions:
     dateEnd: "Present"
 ---
 
-* Conducted undergraduate research and pursued various personal projects.
+* 3.83 GPA and Dean's List; expected graduation May 2028.
+* Certifications: CompTIA Security+, GIAC Foundational Cybersecurity Technologies, Microsoft Office Specialist.
+* Conducted undergraduate research and pursued personal projects, including a $6,000 research grant for Forgetti.
