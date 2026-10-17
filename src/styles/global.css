@@ -29,6 +29,26 @@ header {
   @apply backdrop-blur-sm saturate-200;
 }
 
+@media print {
+  /* Print/PDF: a fixed header repeats over every page and backdrop
+     blur renders poorly — let it scroll away with the content. */
+  header {
+    position: static;
+    background: transparent;
+    backdrop-filter: none;
+  }
+  main {
+    padding-top: 1rem;
+  }
+  img {
+    break-inside: avoid;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
 main {
   @apply flex-1 py-32;
 }
