@@ -1,6 +1,9 @@
 # build output
 dist/
 
+# local screenshot sources and verification shots
+portfolio-shots/
+
 # generated types
 .astro/
 

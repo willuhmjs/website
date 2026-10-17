@@ -1,0 +1,302 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+import Link from "@components/Link.astro";
+import Shot from "@components/Shot.astro";
+import { WORK } from "@consts";
+import { cn } from "@lib/utils";
+
+type Shot = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  href?: string;
+  span?: "full" | "half" | "third" | "two-thirds";
+};
+
+type Project = {
+  name: string;
+  pitch: string;
+  chip: string;
+  bullets: string[];
+  shots: Shot[];
+  links: { label: string; href?: string }[];
+};
+
+const projects: Project[] = [
+  {
+    name: "A new look for the Polish Genealogical Society",
+    chip: "unofficial concept",
+    pitch:
+      "A proposed new homepage for pgsnys.org, showing how the Society's website could look and feel after a modernization.",
+    bullets: [
+      "Puts the two things people visit for — upcoming events and how to join — in the first screenful.",
+      "Comfortable to read on a phone and on larger text, without zooming.",
+      "Built so staff and volunteers could post events and news themselves, without waiting on a developer.",
+    ],
+    shots: [
+      {
+        src: "/work/pgsnys-home-full.webp",
+        alt: "Full-length screenshot of the proposed new homepage for the Polish Genealogical Society, showing the welcome banner, statistics, events, and membership sections",
+        width: 1280,
+        height: 2640,
+        span: "two-thirds",
+      },
+      {
+        src: "/work/pgsnys-mobile.webp",
+        alt: "The proposed homepage shown on a phone screen",
+        width: 390,
+        height: 900,
+        span: "third",
+      },
+    ],
+    links: [{ label: "Source: private — live walkthrough available" }],
+  },
+  {
+    name: "wytui — media library manager",
+    chip: "live on the web",
+    pitch:
+      "A tidy private video library that runs on your own server: save videos from hundreds of websites, organized by channel and ready to watch.",
+    bullets: [
+      "Pick a video, choose the quality you want, and it lands in your own searchable library.",
+      "Set it to watch a channel and new videos arrive by themselves.",
+      "Works from any device — phone, tablet, or computer — through your own server, not someone else's.",
+    ],
+    shots: [
+      {
+        src: "/work/wytui-desktop.webp",
+        alt: "Screenshot of wytui's start screen, a dark media library interface offering quick setup instructions",
+        width: 1280,
+        height: 1400,
+        href: "https://wytui.willuhmjs.com",
+        span: "two-thirds",
+      },
+      {
+        src: "/work/wytui-mobile.webp",
+        alt: "wytui's start screen on a phone",
+        width: 390,
+        height: 900,
+        href: "https://wytui.willuhmjs.com",
+        span: "third",
+      },
+    ],
+    links: [
+      { label: "Live demo", href: "https://wytui.willuhmjs.com" },
+      { label: "Source code", href: "https://github.com/willuhmjs/wytui" },
+    ],
+  },
+  {
+    name: "RelayPoint — digital signage control panel",
+    chip: "open source",
+    pitch:
+      "One dashboard to control every information screen in a building — the kind of lobby TVs you see in churches and schools.",
+    bullets: [
+      "Change what every screen shows from one page; the change appears everywhere within seconds.",
+      "If the internet drops, screens keep showing the last thing you published.",
+      "No special hardware needed — any old computer, tablet, or TV box becomes a managed screen.",
+    ],
+    shots: [
+      {
+        src: "/work/relaypoint-dashboard.webp",
+        alt: "RelayPoint dashboard listing a lobby TV, a kiosk, and a conference-room display, each with a preview of the content it is currently showing",
+        width: 1600,
+        height: 1444,
+      },
+    ],
+    links: [{ label: "Source code", href: "https://github.com/willuhmjs/relaypoint" }],
+  },
+  {
+    name: "Bible Reader — self-hosted reading app",
+    chip: "open source",
+    pitch:
+      "A warm, readable home for the text of the Bible: 37 translations, including Polish, running on your own server.",
+    bullets: [
+      "All 37 translations live on your server, so pages turn instantly with nothing loading from the outside.",
+      "Search the whole library in about a second, and compare translations side by side.",
+      "Nothing is tracked and no outside services are used — private by design.",
+    ],
+    shots: [
+      {
+        src: "/work/bible-home.webp",
+        alt: "The Bible reader homepage with a large serif headline, a verse of the day, and quick links into the library",
+        width: 1280,
+        height: 1780,
+        span: "full",
+      },
+      {
+        src: "/work/bible-reader-dark.webp",
+        alt: "The Gospel of John laid out for comfortable reading in dark mode",
+        width: 1280,
+        height: 1300,
+        span: "two-thirds",
+      },
+      {
+        src: "/work/bible-mobile.webp",
+        alt: "The Bible reader homepage on a phone screen",
+        width: 390,
+        height: 844,
+        span: "third",
+      },
+    ],
+    links: [{ label: "Source code", href: "https://github.com/willuhmjs/bible-web" }],
+  },
+  {
+    name: "LinkNexus — one link for every audience",
+    chip: "open source",
+    pitch:
+      "A single page that holds every link a person or organization needs, reachable from one short URL you print once and never change.",
+    bullets: [
+      "Six ready-made themes plus your own colors — a finished look without a designer.",
+      "Click counting shows which links people actually use.",
+      "Run it yourself for free, or use it as a hosted service — the same software either way.",
+    ],
+    shots: [
+      {
+        src: "/work/linknexus-landing.webp",
+        alt: "The LinkNexus landing page in dark blue, with a preview of a link page on a laptop and a phone",
+        width: 1280,
+        height: 900,
+        span: "full",
+      },
+      {
+        src: "/work/linknexus-profile.webp",
+        alt: "A sample LinkNexus profile page in the Aurora theme, showing four links under a profile name",
+        width: 1280,
+        height: 1000,
+        span: "two-thirds",
+      },
+      {
+        src: "/work/linknexus-mobile.webp",
+        alt: "The LinkNexus landing page on a phone screen",
+        width: 390,
+        height: 900,
+        span: "third",
+      },
+    ],
+    links: [{ label: "Source code", href: "https://github.com/willuhmjs/linknexus" }],
+  },
+  {
+    name: "LingoLearn — AI language classroom",
+    chip: "demo available",
+    pitch:
+      "A language-learning platform with AI-generated lessons, daily streaks, and real teaching tools for a classroom.",
+    bullets: [
+      "Exercises are written for each learner's actual level, from first words to fluent conversation.",
+      "Daily streaks and gentle review timing keep learners coming back without pressure.",
+      "Teachers set assignments and run live quizzes with a leaderboard, all from their own dashboard.",
+    ],
+    shots: [
+      {
+        src: "/work/lingo-dashboard.webp",
+        alt: "LingoLearn student dashboard showing overall progress, a vocabulary chart, and the daily streak",
+        width: 1280,
+        height: 2240,
+        span: "half",
+      },
+      {
+        src: "/work/lingo-dashboard-dark.webp",
+        alt: "The same LingoLearn dashboard in dark mode",
+        width: 1280,
+        height: 2130,
+        span: "half",
+      },
+    ],
+    links: [
+      {
+        label: "Live demo available — source is private",
+        href: "mailto:willuhmjs@gmail.com?subject=LingoLearn%20demo",
+      },
+    ],
+  },
+];
+
+const spanClass: Record<NonNullable<Shot["span"]>, string> = {
+  full: "sm:col-span-3",
+  half: "sm:col-span-1",
+  third: "sm:col-span-1",
+  "two-thirds": "sm:col-span-2",
+};
+---
+
+<PageLayout title={WORK.TITLE} description={WORK.DESCRIPTION}>
+  <Container>
+    <article class="space-y-4">
+      <h1 class="animate font-serif text-2xl font-semibold text-black dark:text-white">
+        Selected work
+      </h1>
+      <p class="animate">
+        Below is a selection of things I have designed, built, and still take care of —
+        including a proposed new look for this Society's own website. Each entry shows what
+        it is, who it is for, and what it does in plain English, with screenshots you can
+        click through where a live site exists.
+      </p>
+    </article>
+
+    <div class="mt-16 flex flex-col gap-20">
+      {projects.map((project, i) => (
+        <section class="animate">
+          <div class={i > 0 ? "border-t border-black/10 dark:border-white/10 pt-16 -mt-16" : ""}>
+            <div class="flex items-center gap-2 text-sm">
+              <span class="tabular-nums text-black/40 dark:text-white/40">
+                {`0${i + 1}`}
+              </span>
+              <span class="rounded-full border border-black/15 dark:border-white/20 px-2.5 py-0.5 text-xs text-nowrap">
+                {project.chip}
+              </span>
+            </div>
+
+            {project.shots.length > 1 ? (
+              <div
+                class={cn(
+                  "mt-4 grid grid-cols-1 gap-4 items-start",
+                  project.shots.every(shot => shot.span === "half")
+                    ? "sm:grid-cols-2"
+                    : "sm:grid-cols-3"
+                )}
+              >
+                {project.shots.map(shot => (
+                  <div class={spanClass[shot.span ?? "full"]}>
+                    <Shot {...shot} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div class="mt-4">
+                <Shot {...project.shots[0]} />
+              </div>
+            )}
+
+            <h2 class="mt-8 font-serif text-2xl font-semibold text-black dark:text-white">
+              {project.name}
+            </h2>
+            <article class="mt-3 space-y-4">
+              <p>{project.pitch}</p>
+              <ul>
+                {project.bullets.map(bullet => (
+                  <li>{bullet}</li>
+                ))}
+              </ul>
+            </article>
+
+            <div class="mt-6 flex flex-wrap gap-x-2 items-center text-sm">
+              {project.links.map((link, j) => (
+                <>
+                  {j > 0 && <span class="text-black/40 dark:text-white/40">/</span>}
+                  {link.href ? (
+                    <Link href={link.href} external>
+                      {link.label}
+                      <span aria-hidden="true">↗</span>
+                    </Link>
+                  ) : (
+                    <span>{link.label}</span>
+                  )}
+                </>
+              ))}
+            </div>
+          </div>
+        </section>
+      ))}
+    </div>
+  </Container>
+</PageLayout>

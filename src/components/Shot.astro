@@ -1,0 +1,54 @@
+---
+import { cn } from "@lib/utils";
+
+type Props = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  href?: string;
+  class?: string;
+};
+
+const { src, alt, width, height, href, class: className } = Astro.props;
+
+const frame = cn(
+  "block overflow-hidden rounded-lg border border-black/15 dark:border-white/20",
+  "shadow-sm",
+  className
+);
+---
+
+{
+  href ? (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      class={cn(frame, "group hover:border-black/30 hover:dark:border-white/40")}
+      aria-label={`${alt} (opens the live site in a new tab)`}
+    >
+      <img
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        loading="lazy"
+        decoding="async"
+        class="block h-auto w-full transition-opacity duration-300 ease-in-out group-hover:opacity-90"
+      />
+    </a>
+  ) : (
+    <div class={frame}>
+      <img
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        loading="lazy"
+        decoding="async"
+        class="block h-auto w-full"
+      />
+    </div>
+  )
+}

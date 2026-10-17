@@ -17,6 +17,11 @@ export const BLOG: Metadata = {
   DESCRIPTION: "A collection of articles on topics I am passionate about.",
 };
 
+export const WORK: Metadata = {
+  TITLE: "Selected work",
+  DESCRIPTION: "Selected projects, each one explained in plain English: what it is, who it's for, and what it does.",
+};
+
 export const EXPERIENCE: Metadata = {
   TITLE: "Experience",
   DESCRIPTION: "My work, education, and academic experience in systems administration and cybersecurity.",
