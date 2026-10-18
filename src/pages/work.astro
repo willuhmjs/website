@@ -199,10 +199,10 @@ const spanClass: Record<NonNullable<Shot["span"]>, string> = {
       </p>
     </article>
 
-    <div class="mt-16 flex flex-col gap-20">
+    <div class="mt-12 flex flex-col gap-12">
       {projects.map((project, i) => (
         <section class="animate">
-          <div class={i > 0 ? "border-t border-black/10 dark:border-white/10 pt-16 -mt-16" : ""}>
+          <div>
             <div class="flex items-center gap-2 text-sm">
               <span class="tabular-nums text-black/40 dark:text-white/40">
                 {`0${i + 1}`}
