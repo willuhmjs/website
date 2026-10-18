@@ -26,34 +26,6 @@ type Project = {
 
 const projects: Project[] = [
   {
-    name: "A new look for the Polish Genealogical Society",
-    chip: "unofficial concept",
-    pitch:
-      "A proposed new homepage for pgsnys.org, showing how the Society's website could look and feel after a modernization.",
-    bullets: [
-      "Puts the two things people visit for — upcoming events and how to join — in the first screenful.",
-      "Comfortable to read on a phone and on larger text, without zooming.",
-      "Built so staff and volunteers could post events and news themselves, without waiting on a developer.",
-    ],
-    shots: [
-      {
-        src: "/work/pgsnys-home-full.webp",
-        alt: "Full-length screenshot of the proposed new homepage for the Polish Genealogical Society, showing the welcome banner, statistics, events, and membership sections",
-        width: 1280,
-        height: 2640,
-        span: "two-thirds",
-      },
-      {
-        src: "/work/pgsnys-mobile.webp",
-        alt: "The proposed homepage shown on a phone screen",
-        width: 390,
-        height: 900,
-        span: "third",
-      },
-    ],
-    links: [{ label: "Source: private — live walkthrough available" }],
-  },
-  {
     name: "wytui — media library manager",
     chip: "live on the web",
     pitch:
@@ -178,7 +150,7 @@ const projects: Project[] = [
   },
   {
     name: "LingoLearn — AI language classroom",
-    chip: "demo available",
+    chip: "open source",
     pitch:
       "A language-learning platform with AI-generated lessons, daily streaks, and real teaching tools for a classroom.",
     bullets: [
@@ -202,13 +174,7 @@ const projects: Project[] = [
         span: "half",
       },
     ],
-    links: [
-      { label: "Source code", href: "https://github.com/willuhmjs/lingolearn" },
-      {
-        label: "Live demo available",
-        href: "mailto:willuhmjs@gmail.com?subject=LingoLearn%20demo",
-      },
-    ],
+    links: [{ label: "Source code", href: "https://github.com/willuhmjs/lingolearn" }],
   },
 ];
 
@@ -227,10 +193,9 @@ const spanClass: Record<NonNullable<Shot["span"]>, string> = {
         Selected work
       </h1>
       <p class="animate">
-        Below is a selection of things I have designed, built, and still take care of —
-        including a proposed new look for this Society's own website. Each entry shows what
-        it is, who it is for, and what it does in plain English, with screenshots you can
-        click through where a live site exists.
+        Below is a selection of things I have designed, built, and still take care of. Each
+        entry shows what it is, who it is for, and what it does in plain English, with
+        screenshots you can click through where a live site exists.
       </p>
     </article>
 
