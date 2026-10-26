@@ -4,6 +4,8 @@ export type PgpKey = {
   expires?: string;
   status: "current" | "expired" | "revoked";
   note?: string;
+  signingSubkey?: string;
+  encryptionSubkey?: string;
 };
 
 // Newest first. Armored public keys live at /pgp/<FINGERPRINT>.asc (public/pgp/)
@@ -16,5 +18,7 @@ export const PGP_KEYS: PgpKey[] = [
     created: "2026-10-26",
     expires: "2028-10-25",
     status: "current",
+    signingSubkey: "F9AA45838988ACD10DF40BA261F16B3A2734AED9",
+    encryptionSubkey: "E83E97D0B836EF117ADD9409251677025A575EBC",
   },
 ];

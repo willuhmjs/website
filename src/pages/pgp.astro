@@ -17,9 +17,10 @@ const spaced = (fpr: string) => fpr.replace(/(.{4})/g, "$1 ").trim();
         PGP key
       </h1>
       <p class="animate">
-        I sign every blog post with PGP so you can check it really came from me and hasn't
-        been changed. Get my public key here to verify them, or to send me encrypted email at
-        <Link href={`mailto:${SITE.EMAIL}`}>{SITE.EMAIL}</Link>.
+        Every blog post is signed with a detached Ed25519 signature. The same key accepts
+        encrypted mail at
+        <a class="underline underline-offset-2" href={`mailto:${SITE.EMAIL}`}>{SITE.EMAIL}</a>
+        via its encryption subkey.
       </p>
     </article>
 
@@ -33,13 +34,25 @@ const spaced = (fpr: string) => fpr.replace(/(.{4})/g, "$1 ").trim();
           <div class="text-sm opacity-75">
             Created {current.created}{current.expires && `, expires ${current.expires}`}
           </div>
+          {(current.signingSubkey || current.encryptionSubkey) && (
+            <dl class="text-sm space-y-1">
+              {current.signingSubkey && (
+                <div>
+                  <dt class="inline opacity-75">Signing subkey [S]:</dt>{" "}
+                  <dd class="inline font-mono break-words">{spaced(current.signingSubkey)}</dd>
+                </div>
+              )}
+              {current.encryptionSubkey && (
+                <div>
+                  <dt class="inline opacity-75">Encryption subkey [E]:</dt>{" "}
+                  <dd class="inline font-mono break-words">{spaced(current.encryptionSubkey)}</dd>
+                </div>
+              )}
+            </dl>
+          )}
           <div class="flex flex-wrap gap-x-2 text-sm">
             <Link href="/pgp/pubkey.asc" download>Download public key (.asc)</Link>
           </div>
-          <p class="text-sm">
-            Always compare the fingerprint above against the key you downloaded:
-            <code>gpg --show-keys --fingerprint pubkey.asc</code>
-          </p>
         </>
       ) : (
         <p>My key isn't published yet. Check back soon.</p>
@@ -48,16 +61,29 @@ const spaced = (fpr: string) => fpr.replace(/(.{4})/g, "$1 ").trim();
 
     <section class="animate mt-10 space-y-3">
       <h2 class="font-semibold text-black dark:text-white">Verifying a post</h2>
-      <p>
-        Every post links to its source file and a detached signature. Download both, then:
-      </p>
+      <p>Each post links to its source and a detached signature.</p>
       <pre class="text-sm"><code>gpg --import pubkey.asc
+gpg --show-keys --fingerprint pubkey.asc
 gpg --verify post-name.mdx.asc post-name.mdx</code></pre>
-      <p>
-        An expired key doesn't invalidate old signatures. GnuPG will report "Good
-        signature" and note the key has expired since. I extend the key's expiry
-        instead of replacing it where possible.
-      </p>
+      <p>What to check:</p>
+      <ul class="list-disc pl-6 space-y-1">
+        <li>
+          The primary fingerprint of the imported key matches the one above. A key
+          downloaded from this site is only as trustworthy as the site, so compare it
+          against a second source if the signature matters to you.
+        </li>
+        <li>
+          <code>gpg --verify</code> reports <em>Good signature</em> from
+          <code>William Faircloth</code>, made by the signing subkey above, and the
+          primary key fingerprint it prints matches too.
+        </li>
+        <li>
+          An expired key doesn't invalidate older signatures. You'll get
+          <em>Good signature</em> plus a note that the key has since expired. I
+          extend the expiry on the same key rather than replacing it, so refresh the
+          key before checking newer posts.
+        </li>
+      </ul>
     </section>
 
     {archived.length > 0 && (
