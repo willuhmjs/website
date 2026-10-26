@@ -18,8 +18,8 @@ const spaced = (fpr: string) => fpr.replace(/(.{4})/g, "$1 ").trim();
       </h1>
       <p class="animate">
         Every blog post is signed with a detached Ed25519 signature. The same key accepts
-        encrypted mail at
-        <a class="underline underline-offset-2" href={`mailto:${SITE.EMAIL}`}>{SITE.EMAIL}</a>
+        encrypted mail at{" "}
+        <a class="underline underline-offset-2" href={`mailto:${SITE.EMAIL}`}>{SITE.EMAIL}</a>{" "}
         via its encryption subkey.
       </p>
     </article>
