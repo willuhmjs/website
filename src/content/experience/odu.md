@@ -2,7 +2,7 @@
 org: "Old Dominion University"
 isSchool: true
 positions:
-  - subtitle: "Bachelor of Science in Cybersecurity<br><span style='font-size: 12px; font-style: italic;'>Minor in Computer Science"
+  - subtitle: "Bachelor of Science in Cybersecurity<br><span style='font-size: 12px; font-style: italic;'>Minors in Computer Science and Criminal Justice"
     dateStart: "2024-09-01"
     dateEnd: "Present"
 ---

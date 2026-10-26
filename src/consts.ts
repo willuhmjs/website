@@ -17,8 +17,8 @@ export const BLOG: Metadata = {
   DESCRIPTION: "A collection of articles on topics I am passionate about.",
 };
 
-export const WORK: Metadata = {
-  TITLE: "Selected work",
+export const PROJECTS: Metadata = {
+  TITLE: "Selected projects",
   DESCRIPTION: "Selected projects, each one explained in plain English: what it is, who it's for, and what it does.",
 };
 
@@ -26,6 +26,14 @@ export const EXPERIENCE: Metadata = {
   TITLE: "Experience",
   DESCRIPTION: "My work, education, and academic experience in systems administration and cybersecurity.",
 };
+
+export const SKILLS = [
+  { LABEL: "Systems", ITEMS: "Linux, Windows Server, Active Directory, PowerShell, Bash" },
+  { LABEL: "Infrastructure", ITEMS: "Ansible, Kubernetes, Harvester, Docker, Proxmox, GPU Clusters" },
+  { LABEL: "Networking & security", ITEMS: "DNS, Enterprise Networking, Firewalls, Log Monitoring, Patching & Hardening" },
+  { LABEL: "Development", ITEMS: "Python, JavaScript, Web Development, Git/GitHub" },
+  { LABEL: "Languages", ITEMS: "English, German" },
+];
 
 export const CONTACT: Metadata = {
   TITLE: "Contact",

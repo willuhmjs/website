@@ -6,5 +6,8 @@ import icon from "astro-icon";
 
 export default defineConfig({
   site: "https://willuhmjs.com",
+  redirects: {
+    "/work": "/projects",
+  },
   integrations: [mdx(), sitemap(), tailwind(), icon()],
 });

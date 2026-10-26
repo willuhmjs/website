@@ -3,7 +3,7 @@ import PageLayout from "@layouts/PageLayout.astro";
 import Container from "@components/Container.astro";
 import Link from "@components/Link.astro";
 import Shot from "@components/Shot.astro";
-import { WORK } from "@consts";
+import { PROJECTS } from "@consts";
 import { cn } from "@lib/utils";
 
 type Shot = {
@@ -37,14 +37,14 @@ const projects: Project[] = [
     ],
     shots: [
       {
-        src: "/work/wytui-downloads.webp",
+        src: "/projects/wytui-downloads.webp",
         alt: "wytui running on its server: the download screen with a video link field, quality choices like 4K and MP3, and storage gauges for the library",
         width: 1600,
         height: 1000,
         href: "https://wytui.willuhmjs.com",
       },
       {
-        src: "/work/wytui-analytics.webp",
+        src: "/projects/wytui-analytics.webp",
         alt: "wytui's analytics screen showing 132 downloads with a 100% success rate and a storage usage bar",
         width: 1600,
         height: 1000,
@@ -68,13 +68,13 @@ const projects: Project[] = [
     ],
     shots: [
       {
-        src: "/work/relaypoint-dashboard.webp",
+        src: "/projects/relaypoint-dashboard.webp",
         alt: "RelayPoint dashboard listing nine displays across two groups — lobby TV, reception wall, café board, kiosks, and meeting rooms — each showing a preview of its live content",
         width: 1600,
         height: 1000,
       },
       {
-        src: "/work/relaypoint-viewer.webp",
+        src: "/projects/relaypoint-viewer.webp",
         alt: "One managed screen full-screen: a welcome slide with event details, sync status, and a QR code, edge to edge on a display",
         width: 1600,
         height: 1000,
@@ -94,20 +94,20 @@ const projects: Project[] = [
     ],
     shots: [
       {
-        src: "/work/bible-home.webp",
+        src: "/projects/bible-home.webp",
         alt: "The Bible reader homepage with a large serif headline, a verse of the day, and quick links into the library",
         width: 1280,
         height: 1780,
         span: "full",
       },
       {
-        src: "/work/bible-reader-dark.webp",
+        src: "/projects/bible-reader-dark.webp",
         alt: "The Gospel of John laid out for comfortable reading in dark mode",
         width: 1280,
         height: 1300,
       },
       {
-        src: "/work/bible-mobile.webp",
+        src: "/projects/bible-mobile.webp",
         alt: "The Bible reader homepage on a phone screen",
         width: 390,
         height: 844,
@@ -128,20 +128,20 @@ const projects: Project[] = [
     ],
     shots: [
       {
-        src: "/work/linknexus-landing.webp",
+        src: "/projects/linknexus-landing.webp",
         alt: "The LinkNexus landing page in dark blue, with a preview of a link page on a laptop and a phone",
         width: 1280,
         height: 900,
         span: "full",
       },
       {
-        src: "/work/linknexus-profile.webp",
+        src: "/projects/linknexus-profile.webp",
         alt: "A sample LinkNexus profile page in the Aurora theme, showing four links under a profile name",
         width: 1280,
         height: 1000,
       },
       {
-        src: "/work/linknexus-mobile.webp",
+        src: "/projects/linknexus-mobile.webp",
         alt: "The LinkNexus landing page on a phone screen",
         width: 390,
         height: 900,
@@ -162,19 +162,32 @@ const projects: Project[] = [
     ],
     shots: [
       {
-        src: "/work/lingo-dashboard.webp",
+        src: "/projects/lingo-dashboard.webp",
         alt: "LingoLearn student dashboard showing overall progress to the next level, a vocabulary mastery heatmap, and the grammar topic map",
         width: 1600,
         height: 1000,
       },
       {
-        src: "/work/lingo-dashboard-dark.webp",
+        src: "/projects/lingo-dashboard-dark.webp",
         alt: "The same LingoLearn dashboard in dark mode",
         width: 1600,
         height: 1000,
       },
     ],
     links: [{ label: "Source code", href: "https://github.com/willuhmjs/lingolearn" }],
+  },
+  {
+    name: "Home Lab — self-hosted infrastructure",
+    chip: "ongoing",
+    pitch:
+      "My own small data center at home: the place I try out real infrastructure before it goes anywhere near production, and where my personal services live.",
+    bullets: [
+      "Virtual machines run on Proxmox and containers on Docker, hosting the apps on this page and other personal services.",
+      "Network equipment and NAS storage are set up by hand, with SMB file shares and regular backups.",
+      "Everything is tinkered with, broken, and fixed on purpose, so the skills carry over to the servers I run at ODU.",
+    ],
+    shots: [],
+    links: [{ label: "Projects on GitHub", href: "https://github.com/willuhmjs" }],
   },
 ];
 
@@ -186,11 +199,11 @@ const spanClass: Record<NonNullable<Shot["span"]>, string> = {
 };
 ---
 
-<PageLayout title={WORK.TITLE} description={WORK.DESCRIPTION}>
+<PageLayout title={PROJECTS.TITLE} description={PROJECTS.DESCRIPTION}>
   <Container>
     <article class="space-y-4">
       <h1 class="animate font-serif text-2xl font-semibold text-black dark:text-white">
-        Selected work
+        Selected projects
       </h1>
       <p class="animate">
         Below is a selection of things I have designed, built, and still take care of. Each
@@ -212,7 +225,7 @@ const spanClass: Record<NonNullable<Shot["span"]>, string> = {
               </span>
             </div>
 
-            {project.shots.length > 1 ? (
+            {project.shots.length === 0 ? null : project.shots.length > 1 ? (
               <div
                 class={cn(
                   "mt-4 grid grid-cols-1 gap-4 items-start",
