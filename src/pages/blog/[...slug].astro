@@ -5,6 +5,8 @@ import Container from "@components/Container.astro";
 import FormattedDate from "@components/FormattedDate.astro";
 import { readingTime } from "@lib/utils";
 import BackToPrev from "@components/BackToPrev.astro";
+import Link from "@components/Link.astro";
+import { existsSync } from "node:fs";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog"))
@@ -19,6 +21,9 @@ type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
 const { Content } = await render(post);
+
+const sourceExt = post.filePath?.split(".").pop() ?? "mdx";
+const signed = existsSync(`public/pgp/signed/${post.id}.${sourceExt}.asc`);
 ---
 
 <PageLayout title={post.data.title} description={post.data.description}>
@@ -45,5 +50,15 @@ const { Content } = await render(post);
     <article class="animate">
       <Content />
     </article>
+    {signed && (
+      <div class="animate mt-10 flex flex-wrap gap-x-2 text-sm">
+        <span>Signed with PGP:</span>
+        <Link href={`/pgp/signed/${post.id}.${sourceExt}.asc`} download>signature</Link>
+        <span class="text-black/40 dark:text-white/40">/</span>
+        <Link href={`/pgp/signed/${post.id}.${sourceExt}`} download>source</Link>
+        <span class="text-black/40 dark:text-white/40">/</span>
+        <Link href="/pgp">public key</Link>
+      </div>
+    )}
   </Container>
 </PageLayout>

@@ -5,6 +5,7 @@ type Props = {
   href: string;
   external?: boolean;
   underline?: boolean;
+  download?: boolean;
 }
 
 const { href, external, underline = true, ...rest } = Astro.props;

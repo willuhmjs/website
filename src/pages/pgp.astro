@@ -1,0 +1,86 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+import Link from "@components/Link.astro";
+import { SITE } from "@consts";
+import { PGP_KEYS } from "@pgp";
+
+const current = PGP_KEYS.find(key => key.status === "current");
+const archived = PGP_KEYS.filter(key => key !== current);
+const spaced = (fpr: string) => fpr.replace(/(.{4})/g, "$1 ").trim();
+---
+
+<PageLayout title="PGP" description="My PGP public key, and how to verify the signatures on my blog posts.">
+  <Container>
+    <article class="space-y-4">
+      <h1 class="animate font-serif text-2xl font-semibold text-black dark:text-white">
+        PGP key
+      </h1>
+      <p class="animate">
+        I sign every blog post with PGP so you can check it really came from me and hasn't
+        been changed. Get my public key here to verify them, or to send me encrypted email at
+        <Link href={`mailto:${SITE.EMAIL}`}>{SITE.EMAIL}</Link>.
+      </p>
+    </article>
+
+    <section class="animate mt-10 space-y-3">
+      <h2 class="font-semibold text-black dark:text-white">Current key</h2>
+      {current ? (
+        <>
+          <div class="font-mono text-sm break-words text-black dark:text-white">
+            {spaced(current.fingerprint)}
+          </div>
+          <div class="text-sm opacity-75">
+            Created {current.created}{current.expires && `, expires ${current.expires}`}
+          </div>
+          <div class="flex flex-wrap gap-x-2 text-sm">
+            <Link href="/pgp/pubkey.asc" download>Download public key (.asc)</Link>
+          </div>
+          <p class="text-sm">
+            Always compare the fingerprint above against the key you downloaded:
+            <code>gpg --show-keys --fingerprint pubkey.asc</code>
+          </p>
+        </>
+      ) : (
+        <p>My key isn't published yet. Check back soon.</p>
+      )}
+    </section>
+
+    <section class="animate mt-10 space-y-3">
+      <h2 class="font-semibold text-black dark:text-white">Verifying a post</h2>
+      <p>
+        Every post links to its source file and a detached signature. Download both, then:
+      </p>
+      <pre class="text-sm"><code>gpg --import pubkey.asc
+gpg --verify post-name.mdx.asc post-name.mdx</code></pre>
+      <p>
+        An expired key doesn't invalidate old signatures. GnuPG will report "Good
+        signature" and note the key has expired since. I extend the key's expiry
+        instead of replacing it where possible.
+      </p>
+    </section>
+
+    {archived.length > 0 && (
+      <section class="animate mt-10 space-y-3">
+        <h2 class="font-semibold text-black dark:text-white">Previous keys</h2>
+        <p>
+          Kept so that posts signed with them can still be verified.
+        </p>
+        <ul class="space-y-4">
+          {archived.map(key => (
+            <li class="text-sm">
+              <div class="font-mono break-words text-black dark:text-white">
+                {spaced(key.fingerprint)}
+              </div>
+              <div class="opacity-75">
+                {key.status}, created {key.created}{key.expires && `, expired ${key.expires}`}
+                {key.note && ` — ${key.note}`}
+              </div>
+              <Link href={`/pgp/${key.fingerprint}.asc`} download>Download (.asc)</Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </Container>
+</PageLayout>

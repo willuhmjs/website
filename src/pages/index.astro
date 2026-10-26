@@ -99,6 +99,13 @@ const experience = (await getCollection("experience"))
             </li>
             <li>{i !== SOCIALS.length - 1 && <span>/</span>}</li>
           ))}
+          <li><span>/</span></li>
+          <li class="flex gap-x-1 text-nowrap">
+            <Link href="/pgp">
+              <Icon name="mdi:key-variant" />
+              pgp
+            </Link>
+          </li>
         </ul>
       </section>
     </div>
