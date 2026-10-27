@@ -10,99 +10,35 @@ const archived = PGP_KEYS.filter(key => key !== current);
 const spaced = (fpr: string) => fpr.replace(/(.{4})/g, "$1 ").trim();
 ---
 
-<PageLayout title="PGP" description="My PGP public key, and how to verify the signatures on my blog posts.">
+<PageLayout title="PGP" description="My PGP public key.">
   <Container>
-    <article class="space-y-4">
-      <h1 class="animate font-serif text-2xl font-semibold text-black dark:text-white">
-        PGP key
-      </h1>
-      <p class="animate">
-        Every blog post is signed with a detached Ed25519 signature. The same key accepts
-        encrypted mail at{" "}
-        <a class="underline underline-offset-2" href={`mailto:${SITE.EMAIL}`}>{SITE.EMAIL}</a>{" "}
-        via its encryption subkey.
-      </p>
-    </article>
-
-    <section class="animate mt-10 space-y-3">
-      <h2 class="font-semibold text-black dark:text-white">Current key</h2>
+    <article class="animate space-y-4">
+      <h1 class="font-serif text-2xl font-semibold text-black dark:text-white">pgp</h1>
       {current ? (
         <>
           <div class="font-mono text-sm break-words text-black dark:text-white">
             {spaced(current.fingerprint)}
           </div>
-          <div class="text-sm opacity-75">
-            Created {current.created}{current.expires && `, expires ${current.expires}`}
+          <div class="text-sm">
+            <Link href="/pgp/pubkey.asc" download>pubkey.asc</Link>
           </div>
-          {(current.signingSubkey || current.encryptionSubkey) && (
-            <dl class="text-sm space-y-1">
-              {current.signingSubkey && (
-                <div>
-                  <dt class="inline opacity-75">Signing subkey [S]:</dt>{" "}
-                  <dd class="inline font-mono break-words">{spaced(current.signingSubkey)}</dd>
-                </div>
-              )}
-              {current.encryptionSubkey && (
-                <div>
-                  <dt class="inline opacity-75">Encryption subkey [E]:</dt>{" "}
-                  <dd class="inline font-mono break-words">{spaced(current.encryptionSubkey)}</dd>
-                </div>
-              )}
-            </dl>
-          )}
-          <div class="flex flex-wrap gap-x-2 text-sm">
-            <Link href="/pgp/pubkey.asc" download>Download public key (.asc)</Link>
-          </div>
+          <pre class="text-sm"><code>gpg --verify post.mdx.asc post.mdx</code></pre>
         </>
       ) : (
-        <p>My key isn't published yet. Check back soon.</p>
+        <p>no key yet.</p>
       )}
-    </section>
-
-    <section class="animate mt-10 space-y-3">
-      <h2 class="font-semibold text-black dark:text-white">Verifying a post</h2>
-      <p>Each post links to its source and a detached signature.</p>
-      <pre class="text-sm"><code>gpg --import pubkey.asc
-gpg --show-keys --fingerprint pubkey.asc
-gpg --verify post-name.mdx.asc post-name.mdx</code></pre>
-      <p>What to check:</p>
-      <ul class="list-disc pl-6 space-y-1">
-        <li>
-          The primary fingerprint of the imported key matches the one above. A key
-          downloaded from this site is only as trustworthy as the site, so compare it
-          against a second source if the signature matters to you.
-        </li>
-        <li>
-          <code>gpg --verify</code> reports <em>Good signature</em> from{" "}
-          <code>William Faircloth</code>, made by the signing subkey above, and the
-          primary key fingerprint it prints matches too.
-        </li>
-        <li>
-          An expired key doesn't invalidate older signatures. You'll get{" "}
-          <em>Good signature</em> plus a note that the key has since expired. I
-          extend the expiry on the same key rather than replacing it, so refresh the
-          key before checking newer posts.
-        </li>
-      </ul>
-    </section>
+    </article>
 
     {archived.length > 0 && (
-      <section class="animate mt-10 space-y-3">
-        <h2 class="font-semibold text-black dark:text-white">Previous keys</h2>
-        <p>
-          Kept so that posts signed with them can still be verified.
-        </p>
-        <ul class="space-y-4">
+      <section class="animate mt-10 space-y-2">
+        <h2 class="text-sm opacity-75">previous</h2>
+        <ul class="space-y-2">
           {archived.map(key => (
             <li class="text-sm">
-              <div class="font-mono break-words text-black dark:text-white">
-                {spaced(key.fingerprint)}
-              </div>
-              <div class="opacity-75">
-                {key.status}, created {key.created}{key.expires && `, expired ${key.expires}`}
-                {key.note && ` — ${key.note}`}
-              </div>
-              <Link href={`/pgp/${key.fingerprint}.asc`} download>Download (.asc)</Link>
+              <Link href={`/pgp/${key.fingerprint}.asc`} download>
+                <span class="font-mono break-words">{spaced(key.fingerprint)}</span>
+              </Link>
+              <span class="opacity-75"> {key.status} {key.expires ?? key.created}</span>
             </li>
           ))}
         </ul>
