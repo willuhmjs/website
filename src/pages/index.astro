@@ -7,6 +7,7 @@ import Link from "@components/Link.astro";
 import { SITE, HOME, SOCIALS } from "@consts";
 import Experience from "@components/Experience.astro";
 import { Icon } from "astro-icon/components";
+import { PGP_KEYS } from "@pgp";
 
 const blog = (await getCollection("blog"))
   .filter(post => !post.data.draft)
@@ -23,6 +24,8 @@ const experience = (await getCollection("experience"))
     return bDate - aDate;
   })
 
+const pgp = PGP_KEYS.find(key => key.status === "current");
+const spaced = (fpr: string) => fpr.replace(/(.{4})/g, "$1 ").trim();
 
 ---
 
@@ -32,7 +35,7 @@ const experience = (await getCollection("experience"))
       Hi, I'm Will! <span class="text-xl">👋🏻</span> 
     </h4>
     <div class="space-y-16">
-      <section>
+      <section class="space-y-4">
         <article class="space-y-4">
           <p class="animate">
             I'm a cybersecurity student at Old Dominion University and a systems administrator
@@ -40,8 +43,17 @@ const experience = (await getCollection("experience"))
             infrastructure for 100+ servers and 2,000+ users. I learn through hands-on projects,
             from AI-driven 3D printing to my own home lab.
           </p>
-         
         </article>
+        {pgp && (
+          <div class="animate space-y-2">
+            <p>For secure email, encrypt to my PGP key:</p>
+            <Link href="/pgp/pubkey.asc" download>{spaced(pgp.fingerprint)}</Link>
+            <p>
+              Posts are signed; verify them with the signatures in the{" "}
+              <a class="underline underline-offset-2 decoration-black/15 dark:decoration-white/30 hover:decoration-black/25 hover:dark:decoration-white/50 hover:text-black hover:dark:text-white transition-colors duration-300 ease-in-out" href="https://github.com/willuhmjs/website/tree/main/public/pgp/signed" target="_blank">GitHub repo</a>.
+            </p>
+          </div>
+        )}
       </section>
 
       <section class="animate space-y-6">

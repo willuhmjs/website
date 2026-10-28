@@ -3,46 +3,30 @@ import PageLayout from "@layouts/PageLayout.astro";
 import Container from "@components/Container.astro";
 import Link from "@components/Link.astro";
 import { SITE } from "@consts";
-import { PGP_KEYS } from "@pgp";
+import { PGP_KEYS, type PgpKey } from "@pgp";
 
 const current = PGP_KEYS.find(key => key.status === "current");
 const archived = PGP_KEYS.filter(key => key !== current);
-const spaced = (fpr: string) => fpr.replace(/(.{4})/g, "$1 ").trim();
+const exp = (key: PgpKey) => (key.expires ? ` [expires: ${key.expires}]` : "");
 ---
 
 <PageLayout title="PGP" description="My PGP public key.">
   <Container>
-    <article class="animate space-y-4">
-      <h1 class="font-serif text-2xl font-semibold text-black dark:text-white">pgp</h1>
-      {current ? (
-        <>
-          <div class="font-mono text-sm break-words text-black dark:text-white">
-            {spaced(current.fingerprint)}
-          </div>
-          <div class="text-sm">
-            <Link href="/pgp/pubkey.asc" download>pubkey.asc</Link>
-          </div>
-          <pre class="text-sm"><code>gpg --verify post.mdx.asc post.mdx</code></pre>
-        </>
-      ) : (
-        <p>no key yet.</p>
-      )}
-    </article>
-
-    {archived.length > 0 && (
-      <section class="animate mt-10 space-y-2">
-        <h2 class="text-sm opacity-75">previous</h2>
-        <ul class="space-y-2">
-          {archived.map(key => (
-            <li class="text-sm">
-              <Link href={`/pgp/${key.fingerprint}.asc`} download>
-                <span class="font-mono break-words">{spaced(key.fingerprint)}</span>
-              </Link>
-              <span class="opacity-75"> {key.status} {key.expires ?? key.created}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )}
+    <div class="animate space-y-8">
+      {[current, ...archived].filter(Boolean).map(key => (
+        <div class:list={["space-y-3", key !== current && "opacity-50"]}>
+          <pre class="overflow-x-auto rounded-lg border border-black/15 bg-black/5 p-4 text-xs leading-relaxed text-black dark:border-white/20 dark:bg-white/5 dark:text-white"><code>pub   ed25519 {key.created} [C]{exp(key)}
+      {key.fingerprint}
+uid                      William Faircloth &lt;{SITE.EMAIL}&gt;{key.signingSubkey && `
+sub   ed25519 ${key.created} [S]${exp(key)}
+      ${key.signingSubkey}`}{key.encryptionSubkey && `
+sub   cv25519 ${key.created} [E]${exp(key)}
+      ${key.encryptionSubkey}`}</code></pre>
+          <Link href={key === current ? "/pgp/pubkey.asc" : `/pgp/${key.fingerprint}.asc`} download>
+            download {key === current ? "pubkey.asc" : `${key.fingerprint.slice(-16)}.asc`}
+          </Link>
+        </div>
+      ))}
+    </div>
   </Container>
 </PageLayout>
